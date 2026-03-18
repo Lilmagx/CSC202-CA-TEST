@@ -60,3 +60,8 @@ class QuizSession:
             "is_correct": is_correct,
         })
 
+    def finish(self):
+        """Mark session as complete and record end time."""
+        self.end_time = datetime.now()
+        self.submitted = True
+
