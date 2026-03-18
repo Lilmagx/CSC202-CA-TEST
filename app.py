@@ -40,3 +40,23 @@ class QuizSession:
         """Enqueue all questions into the FIFO queue."""
         for q in questions:
             self.question_queue.append(q)
+
+    def get_next_question(self):
+        """Dequeue and return the next question (FIFO)."""
+        if self.question_queue:
+            return self.question_queue.popleft()
+        return None
+
+    def submit_answer(self, question, user_answer):
+        """Record the user's answer and update the score."""
+        is_correct = question.check_answer(user_answer)
+        if is_correct:
+            self.score += 1
+        self.answers.append({
+            "question": question.question_text,
+            "country": question.country,
+            "user_answer": user_answer.upper(),
+            "correct_answer": question.correct_answer,
+            "is_correct": is_correct,
+        })
+
